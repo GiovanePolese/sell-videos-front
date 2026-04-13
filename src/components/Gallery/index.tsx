@@ -24,7 +24,7 @@ export const Gallery = ({ videos, prependWatermark = false }: GalleryProps) => {
           controls
         >
           <source
-            src={prependWatermark ? `wm-${cloudFrontUrl}${video.image_name}` : `${cloudFrontUrl}${video.image_name}`}
+            src={prependWatermark ? `${cloudFrontUrl}wm-${video.image_name}` : `${cloudFrontUrl}${video.image_name}`}
             type="video/mp4"
           />
         </video>
