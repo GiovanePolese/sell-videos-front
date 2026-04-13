@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import LoginPage from '../pages/LoginPage';
 import ProfilePage from '../pages/ProfilePage';
 import HomePage from '../pages/HomePage';
-import ProtectedRoute from '../components/ProtectedRoute';
+import PublicGalleryPage from '../pages/PublicGalleryPage';
 
 const AppRoutes: React.FC = () => {
   return (
@@ -17,6 +17,7 @@ const AppRoutes: React.FC = () => {
           }
         />
         <Route path="/" element={<HomePage />} />
+        <Route path="/gallery" element={<PublicGalleryPage />} />
       </Routes>
     </BrowserRouter>
   );
