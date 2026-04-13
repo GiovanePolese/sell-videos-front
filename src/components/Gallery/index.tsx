@@ -9,8 +9,10 @@ type Video = {
 
 type GalleryProps = {
   videos: Video[];
+  prependWatermark?: boolean;
 };
-export const Gallery = ({ videos }: GalleryProps) => {
+
+export const Gallery = ({ videos, prependWatermark = false }: GalleryProps) => {
   const cloudFrontUrl = import.meta.env.VITE_CLOUDFRONT_URL;
 
   return (
@@ -21,7 +23,10 @@ export const Gallery = ({ videos }: GalleryProps) => {
           width="240"
           controls
         >
-          <source src={`${cloudFrontUrl}${video.image_name}`} type="video/mp4"/>
+          <source
+            src={prependWatermark ? `wm-${cloudFrontUrl}${video.image_name}` : `${cloudFrontUrl}${video.image_name}`}
+            type="video/mp4"
+          />
         </video>
       ))}
     </div>
