@@ -1,22 +1,10 @@
-import React, { useMemo, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { Gallery, Video } from '../components/Gallery';
-
-type CartLocationState = {
-  cartVideos?: Video[];
-};
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useCart } from '../context/useCart';
 
 const CartPage: React.FC = () => {
   const navigate = useNavigate();
-  const location = useLocation();
-  const state = (location.state as CartLocationState | null) ?? null;
-  const [cartVideos, setCartVideos] = useState<Video[]>(state?.cartVideos ?? []);
-
-  const cartVideoIds = useMemo(() => cartVideos.map((video) => video.id), [cartVideos]);
-
-  const handleToggleCart = (video: Video) => {
-    setCartVideos((previousCartVideos) => previousCartVideos.filter((cartVideo) => cartVideo.id !== video.id));
-  };
+  const { cartVideos, removeVideo } = useCart();
 
   return (
     <div className="mt-10 flex flex-col justify-center px-4 pb-10">
@@ -36,11 +24,28 @@ const CartPage: React.FC = () => {
       {cartVideos.length === 0 ? (
         <p className="text-gray-500">Seu carrinho está vazio.</p>
       ) : (
-        <Gallery
-          videos={cartVideos}
-          cartVideoIds={cartVideoIds}
-          onToggleCart={handleToggleCart}
-        />
+        <ul className="flex flex-col gap-3">
+          {cartVideos.map((video) => (
+            <li
+              key={video.id}
+              className="flex items-center justify-between rounded-lg border border-gray-200 p-4 shadow-sm"
+            >
+              <div>
+                <p className="text-sm font-semibold text-gray-900">Vídeo #{video.id}</p>
+                <p className="text-sm text-gray-600">Arquivo: {video.image_name}</p>
+                <p className="text-xs text-gray-500">Data: {new Date(video.date).toLocaleDateString('pt-BR')}</p>
+              </div>
+
+              <button
+                type="button"
+                onClick={() => removeVideo(video.id)}
+                className="rounded-md bg-red-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-red-700"
+              >
+                Remover
+              </button>
+            </li>
+          ))}
+        </ul>
       )}
     </div>
   );
