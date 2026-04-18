@@ -1,14 +1,28 @@
 import React, { useEffect, useState } from 'react';
-import { getProfile, logout } from '../api/authService';
+import { getProfile, logout } from '../api/rest/authService';
+import { GET_USER } from '../api/graphql/userQueries';
 import '../App.css'; 
 import axios from 'axios';
 import { Gallery } from '../components/Gallery/index'
 import UploadFiles from '../components/UploadFiles';
+import { useQuery } from '@apollo/client/react';
 
 const ProfilePage: React.FC = () => {
   const [profile, setProfile] = useState<{ username: string } | null>(null);
   const [videos, setVideos] = useState<[]>([]);
   const EXPIRY_TIME = 1000 * 60 * 60;
+  const { data } = useQuery(GET_USER, {
+    variables: { 
+      username: profile?.username // O valor que você quer enviar
+    }
+  });
+
+  useEffect(() => {
+    const fetchQuery = async () => {
+      console.log(data)
+    }
+    fetchQuery();
+  }, [data])
 
   useEffect(() => {
     const fetchProfileAndImages = async () => {

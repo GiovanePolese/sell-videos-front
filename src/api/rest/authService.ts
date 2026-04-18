@@ -14,7 +14,7 @@ export const logout = (): void => {
   localStorage.removeItem('token');
 };
 
-export const getProfile = async (): Promise<any> => {
+export const getProfile = async (): Promise<unknown> => {
   const token = localStorage.getItem('token');
   const response = await axios.get(`${API_URL}/profile`, {
     headers: { Authorization: `Bearer ${token}` },
