@@ -2,23 +2,23 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { Video } from '../components/Gallery';
 import { CART_STORAGE_KEY, CartContext } from './cartContext';
 
+const getStoredCartVideos = (): Video[] => {
+  const rawCart = localStorage.getItem(CART_STORAGE_KEY);
+
+  if (!rawCart) {
+    return [];
+  }
+
+  try {
+    return JSON.parse(rawCart) as Video[];
+  } catch (error) {
+    console.error('Error reading cart from localStorage:', error);
+    return [];
+  }
+};
+
 const CartProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
-  const [cartVideos, setCartVideos] = useState<Video[]>([]);
-
-  useEffect(() => {
-    const rawCart = localStorage.getItem(CART_STORAGE_KEY);
-
-    if (!rawCart) {
-      return;
-    }
-
-    try {
-      const savedCart = JSON.parse(rawCart) as Video[];
-      setCartVideos(savedCart);
-    } catch (error) {
-      console.error('Error reading cart from localStorage:', error);
-    }
-  }, []);
+  const [cartVideos, setCartVideos] = useState<Video[]>(() => getStoredCartVideos());
 
   useEffect(() => {
     localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cartVideos));
