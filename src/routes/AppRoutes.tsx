@@ -5,6 +5,7 @@ import ProfilePage from '../pages/ProfilePage';
 import HomePage from '../pages/HomePage';
 import PublicGalleryPage from '../pages/PublicGalleryPage';
 import CartPage from '../pages/CartPage';
+import PixCheckoutPage from '../pages/PixCheckoutPage';
 
 const AppRoutes: React.FC = () => {
   return (
@@ -20,6 +21,7 @@ const AppRoutes: React.FC = () => {
         <Route path="/" element={<HomePage />} />
         <Route path="/gallery" element={<PublicGalleryPage />} />
         <Route path="/cart" element={<CartPage />} />
+        <Route path="/checkout/pix/:orderId" element={<PixCheckoutPage />} />
       </Routes>
     </BrowserRouter>
   );
