@@ -27,6 +27,14 @@ const PublicGalleryPage: React.FC = () => {
       <h1 className="pb-5">Galeria Pública</h1>
       <p className="mb-6 text-sm text-gray-600">Itens no carrinho: {cartVideos.length}</p>
 
+      <button
+        type="button"
+        onClick={() => navigate('/orders')}
+        className="rounded-full bg-emerald-600 px-6 py-3 text-sm font-semibold text-white shadow-lg transition hover:bg-emerald-700"
+      >
+        Meus Pedidos
+      </button>
+
       <div className="video-container justify-center pt-12">
         <Gallery
           videos={videos}

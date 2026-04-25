@@ -1,9 +1,8 @@
-import axios from 'axios';
-
-const API_URL = 'http://localhost:3000/auth';
+import { api } from './apiClient';
 
 export const login = async (name: string, password: string): Promise<{ access_token: string }> => {
-  const response = await axios.post(`${API_URL}/login`, { name, password });
+  const response = await api.post('/auth/login', { name, password });
+  
   if (response.data.access_token) {
     localStorage.setItem('token', response.data.access_token);
   }
@@ -15,9 +14,6 @@ export const logout = (): void => {
 };
 
 export const getProfile = async (): Promise<unknown> => {
-  const token = localStorage.getItem('token');
-  const response = await axios.get(`${API_URL}/profile`, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
+  const response = await api.get('/auth/profile');
   return response.data;
 };

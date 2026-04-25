@@ -6,6 +6,7 @@ export type CartContextType = {
   cartVideoIds: number[];
   toggleVideo: (video: Video) => void;
   removeVideo: (videoId: number) => void;
+  clearCart: () => void;
 };
 
 export const CartContext = createContext<CartContextType | undefined>(undefined);
