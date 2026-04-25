@@ -42,12 +42,17 @@ const CartProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
     setCartVideos((previousCartVideos) => previousCartVideos.filter((video) => video.id !== videoId));
   };
 
+  const clearCart = () => {
+    setCartVideos([]);
+  };
+
   const value = useMemo(
     () => ({
       cartVideos,
       cartVideoIds,
       toggleVideo,
       removeVideo,
+      clearCart,
     }),
     [cartVideoIds, cartVideos],
   );
