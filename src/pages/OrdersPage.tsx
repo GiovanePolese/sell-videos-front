@@ -1,15 +1,16 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { MeusPedidosDocument, MeusPedidosQuery } from '../gql/graphql';
 import { useQuery } from '@apollo/client/react';
-import { GET_ORDERS } from '../api/graphql/orderQueries';
 
 const OrdersPage: React.FC = () => {
-  const { data, loading, error } = useQuery(GET_ORDERS);
+  const { data, loading, error } = useQuery<MeusPedidosQuery>(MeusPedidosDocument);
   const navigate = useNavigate();
-  const orders = data?.meusPedidos || [];
 
   if (loading) return <p className="mt-10 text-center text-gray-500">Carregando seus pedidos...</p>;
   if (error) return <p className="mt-10 text-center text-red-500">Erro ao carregar pedidos.</p>;
+
+  const orders: MeusPedidosQuery['meusPedidos'] = data?.meusPedidos ?? [];
 
   return (
     <div className="mt-10 flex flex-col justify-center px-4 pb-10 min-w-[700px] max-w-4xl mx-auto">
@@ -26,7 +27,7 @@ const OrdersPage: React.FC = () => {
 
       <div className="flex flex-col gap-4 mt-6">
         {orders.length > 0 ? (
-          orders.map((order: any) => (
+          orders.map((order) => (
             <div 
               key={order.id}
               className="border border-gray-200 rounded-lg p-5 shadow-sm flex flex-col gap-2 bg-white"

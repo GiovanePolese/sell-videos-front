@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
+import { uploadFiles } from "../../api/rest/filesService";
 
 const UploadFiles = () => {
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
@@ -21,25 +21,23 @@ const UploadFiles = () => {
     selectedFiles.forEach((file) => formData.append("files", file));
   
     try {
-      const response = await axios.post("http://localhost:3000/files/upload", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-        onUploadProgress: (progressEvent) => {
-          if (progressEvent.total) {
-            const progress = Math.round((progressEvent.loaded * 100) / progressEvent.total);
-            setUploadProgress(progress);
-          } else {
-            console.warn("Total size of the file is not available.");
-          }
-        },
+      const data = await uploadFiles(formData, (progressEvent) => {
+        if (progressEvent.total) {
+          const progress = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+          setUploadProgress(progress);
+        } else {
+          console.warn("Total size of the file is not available.");
+        }
       });
 
-      console.log("Files uploaded successfully:", response.data);
+      console.log("Files uploaded successfully:", data);
       alert("Files uploaded successfully!");
+      
+      // Limpezas após o sucesso
       localStorage.clear();
       setSelectedFiles([]);
       setUploadProgress(null);
+      
     } catch (error) {
       console.error("Error uploading files:", error);
       alert("Failed to upload files.");

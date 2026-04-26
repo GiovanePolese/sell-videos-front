@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { login } from '../api/rest/authService';
+import { login } from '../../api/rest/authService';
 
 const LoginForm: React.FC = () => {
   const [username, setUsername] = useState('');
@@ -12,7 +12,7 @@ const LoginForm: React.FC = () => {
       alert('Login bem-sucedido!');
       window.location.href = '/profile'; // Redireciona após o login
     } catch (error) {
-      alert('Erro no login. Verifique suas credenciais.');
+      alert('Erro no login. Verifique suas credenciais. Error:' + error);
     }
   };
 

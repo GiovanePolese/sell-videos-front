@@ -1,19 +1,24 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { Gallery, Video } from '../components/Gallery';
-import { useCart } from '../context/useCart';
+import { Gallery } from '../components/Gallery/Gallery';
+import { useCartStore } from '../store/useCartStore';
+import { getActiveUserFiles } from '../api/rest/filesService';
+import { UserMedia } from '../types/user';
 
 const PublicGalleryPage: React.FC = () => {
-  const [videos, setVideos] = useState<Video[]>([]);
+  const [videos, setVideos] = useState<UserMedia[]>([]);
   const navigate = useNavigate();
-  const { cartVideos, cartVideoIds, toggleVideo } = useCart();
+
+  const cartVideos = useCartStore((state) => state.cartVideos);
+  const toggleVideo = useCartStore((state) => state.toggleVideo);
+  const cartVideoIds = cartVideos.map((video) => video.id);
 
   useEffect(() => {
     const fetchVideos = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/files/user/1/active');
-        setVideos(response.data);
+        const data = await getActiveUserFiles(1);
+        setVideos(data);
+        localStorage.setItem('videos', JSON.stringify(data));
       } catch (error) {
         console.error('Error loading public gallery videos:', error);
       }

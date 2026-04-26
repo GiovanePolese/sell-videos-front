@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import PixCheckout from '../components/PixCheckout';
+import PixCheckout from '../components/PixCheckout/PixCheckout';
 
 const PixCheckoutPage: React.FC = () => {
   const navigate = useNavigate();

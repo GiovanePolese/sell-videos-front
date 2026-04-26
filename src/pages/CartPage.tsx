@@ -1,11 +1,14 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useCart } from '../context/useCart';
+import { useCartStore } from '../store/useCartStore'; // <-- Import da nova store
 import { createPix } from '../api/rest/checkoutService';
 
 const CartPage: React.FC = () => {
   const navigate = useNavigate();
-  const { cartVideos, removeVideo, clearCart } = useCart();
+  
+  const cartVideos = useCartStore((state) => state.cartVideos);
+  const removeVideo = useCartStore((state) => state.removeVideo);
+  const clearCart = useCartStore((state) => state.clearCart);
 
   const handlePixCheckout = async () => {
     const generatedOrderId = `${Date.now()}`;

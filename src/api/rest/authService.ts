@@ -1,3 +1,4 @@
+import { UserProfile } from '../../types/user';
 import { api } from './apiClient';
 
 export const login = async (name: string, password: string): Promise<{ access_token: string }> => {
@@ -13,7 +14,7 @@ export const logout = (): void => {
   localStorage.removeItem('token');
 };
 
-export const getProfile = async (): Promise<unknown> => {
+export const getProfile = async (): Promise<UserProfile> => {
   const response = await api.get('/auth/profile');
   return response.data;
 };

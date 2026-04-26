@@ -1,17 +1,10 @@
-export type Video = {
-  date: Date;
-  fk_users: number;
-  id: number;
-  image_name: string;
-  image_url: string;
-  status: boolean;
-};
+import { UserMedia } from "../../types/user";
 
 type GalleryProps = {
-  videos: Video[];
+  videos: UserMedia[];
   prependWatermark?: boolean;
   cartVideoIds?: number[];
-  onToggleCart?: (video: Video) => void;
+  onToggleCart?: (video: UserMedia) => void;
 };
 
 export const Gallery = ({ videos, prependWatermark = false, cartVideoIds = [], onToggleCart }: GalleryProps) => {

@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getPixCharge } from '../api/rest/checkoutService';
+import { getPixCharge } from '../../api/rest/checkoutService';
 
 type PixCheckoutProps = {
   orderId: string;
