@@ -17,6 +17,7 @@ Este projeto utiliza um ecossistema moderno focado em performance, tipagem segur
 * **[GraphQL](https://graphql.org/):** Linguagem de consulta para APIs utilizada para busca de dados complexos.
 * **[Apollo Client](https://www.apollographql.com/):** Cliente robusto para gerenciamento de dados e cache com GraphQL.
 * **[Vitest](https://vitest.dev/) & [Testing Library](https://testing-library.com/):** Suíte de testes unitários e de componentes.
+* **[Tailwind CSS](https://tailwindcss.com/):** Framework de estilização via classes utilitárias.
 
 ### Comunicação com a API
 
