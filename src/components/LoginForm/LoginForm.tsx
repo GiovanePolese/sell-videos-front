@@ -9,8 +9,7 @@ const LoginForm: React.FC = () => {
     e.preventDefault();
     try {
       await login(username, password);
-      alert('Login bem-sucedido!');
-      window.location.href = '/profile'; // Redireciona após o login
+      window.location.href = '/profile';
     } catch (error) {
       alert('Erro no login. Verifique suas credenciais. Error:' + error);
     }

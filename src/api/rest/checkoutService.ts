@@ -16,9 +16,7 @@ export const createPix = async (
   return response.data;
 }
 
-export const getPixCharge = async (
-  txid: string
-): Promise<any> => {
+export const getPixCharge = async (txid: string): Promise<any> => {
   const response = await api.get(`/payment/pix/${txid}`);
 
   return response.data; 

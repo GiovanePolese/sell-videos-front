@@ -1,50 +1,73 @@
-# React + TypeScript + Vite
+# 📹 Sell Videos - Marketplace para Videomakers (Frontend)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+O **Sell Videos** é uma plataforma de marketplace focada em criadores de conteúdo e videomakers. O sistema permite que profissionais disponibilizem e vendam galerias de vídeos de eventos (como campeonatos esportivos, casamentos, etc.) diretamente para a comunidade.
 
-Currently, two official plugins are available:
+O criador tem total liberdade para organizar e expor suas galerias, enquanto a plataforma cuida do processamento de pagamentos e da liberação dos arquivos de vídeo comprados individualmente ou em lotes pelos usuários finais.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Este repositório contém a aplicação **Frontend** do projeto.
 
-## Expanding the ESLint configuration
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## 🛠️ Tecnologias e Ferramentas
 
-- Configure the top-level `parserOptions` property like this:
+Este projeto utiliza um ecossistema moderno focado em performance, tipagem segura e escalabilidade:
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+* **[React](https://react.dev/) + [TypeScript](https://www.typescriptlang.org/):** Base da interface da aplicação.
+* **[Vite](https://vitejs.dev/):** Ferramenta de build e servidor de desenvolvimento.
+* **[Zustand](https://github.com/pmndrs/zustand):** Gerenciamento de estado global.
+* **[GraphQL](https://graphql.org/):** Linguagem de consulta para APIs utilizada para busca de dados complexos.
+* **[Apollo Client](https://www.apollographql.com/):** Cliente robusto para gerenciamento de dados e cache com GraphQL.
+* **[Vitest](https://vitest.dev/) & [Testing Library](https://testing-library.com/):** Suíte de testes unitários e de componentes.
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+### Comunicação com a API
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+A aplicação utiliza uma arquitetura híbrida de comunicação, organizada em:
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+* `src/api/graphql/`: Integrações via **Apollo Client**. Utilizamos o [GraphQL Code Generator](https://the-guild.dev/graphql/codegen) para gerar hooks e tipagens automáticas a partir do schema.
+* `src/api/rest/`: Chamadas HTTP padrão para endpoints RESTful.
+
+
+## 📜 Scripts Disponíveis
+
+No diretório do projeto, você pode executar os seguintes comandos:
+
+| Comando | Descrição |
+| :--- | :--- |
+| `npm run dev` | Inicia o servidor de desenvolvimento com Vite. |
+| `npm run build` | Compila o código TypeScript e gera o build de produção. |
+| `npm run generate` | Executa o `graphql-codegen` para atualizar as tipagens e hooks do GraphQL. |
+| `npm run test` | Executa os testes unitários via Vitest. |
+| `npm run test:ui` | Abre a interface visual do Vitest para acompanhar os testes. |
+| `npm run coverage` | Gera o relatório de cobertura de testes da aplicação. |
+| `npm run lint` | Executa a verificação de erros e estilo de código com ESLint. |
+| `npm run preview` | Visualiza localmente o build gerado para produção. |
+
+---
+
+## ⚙️ Como executar o projeto localmente
+
+### Pré-requisitos
+
+* [Node.js](https://nodejs.org/) (versão 18+)
+* Gerenciador de pacotes (`npm`, `yarn` ou `pnpm`)
+
+### Instalação
+
+1. Clone o repositório:
+   ```bash
+   git clone [https://github.com/seu-usuario/sell-videos-front.git](https://github.com/seu-usuario/sell-videos-front.git)
+
+2. Instale as dependências:
+   ```bash
+   npm install
+
+3. Configure o ambiente:</br>
+Crie um arquivo .env baseado no .env.example com as URLs da API.
+
+4. Gere as tipagens do GraphQL:
+   ```bash
+   npm run generate
+
+5. Inicie o projeto:
+   ```bash
+   npm run dev
+  A aplicação estará disponível em http://localhost:5173.
