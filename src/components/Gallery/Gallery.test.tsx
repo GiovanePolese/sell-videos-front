@@ -2,15 +2,15 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { vi } from 'vitest';
 import { Gallery } from './Gallery';
-import { UserMedia } from '../../types/user';
+import { FileEntity } from '../../types/files';
 
 // Criamos um array falso de vídeos para usar nos testes.
-// O "as UserMedia" garante que o TypeScript não reclame de propriedades faltando,
+// O "as FileEntity" garante que o TypeScript não reclame de propriedades faltando,
 // já que só precisamos do 'id' e do 'image_name' para este componente.
 const mockVideos = [
   { id: 1, image_name: 'ferias.mp4' },
   { id: 2, image_name: 'aniversario.mp4' },
-] as UserMedia[];
+] as FileEntity[];
 
 describe('Gallery', () => {
   // Antes de todos os testes, criamos um "dublê" para a nossa variável de ambiente

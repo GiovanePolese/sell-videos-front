@@ -1,10 +1,10 @@
-import { UserMedia } from "../../types/user";
+import { FileEntity } from "../../types/files";
 
 type GalleryProps = {
-  videos: UserMedia[];
+  videos: FileEntity[];
   prependWatermark?: boolean;
   cartVideoIds?: number[];
-  onToggleCart?: (video: UserMedia) => void;
+  onToggleCart?: (video: FileEntity) => void;
 };
 
 export const Gallery = ({ videos, prependWatermark = false, cartVideoIds = [], onToggleCart }: GalleryProps) => {

@@ -3,10 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import { Gallery } from '../components/Gallery/Gallery';
 import { useCartStore } from '../store/useCartStore';
 import { getActiveUserFiles } from '../api/rest/filesService';
-import { UserMedia } from '../types/user';
+import { FileEntity } from '../types/files';
 
 const PublicGalleryPage: React.FC = () => {
-  const [videos, setVideos] = useState<UserMedia[]>([]);
+  const [videos, setVideos] = useState<FileEntity[]>([]);
   const navigate = useNavigate();
 
   const cartVideos = useCartStore((state) => state.cartVideos);

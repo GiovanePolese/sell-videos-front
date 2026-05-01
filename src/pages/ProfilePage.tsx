@@ -6,11 +6,12 @@ import { getActiveUserFiles } from '../api/rest/filesService';
 import { Gallery } from '../components/Gallery/Gallery'
 import UploadFiles from '../components/UploadFiles/UploadFiles';
 import { useQuery } from '@apollo/client/react';
-import { UserMedia, UserProfile } from '../types/user';
+import { UserProfile } from '../types/user';
+import { FileEntity } from '../types/files';
 
 const ProfilePage: React.FC = () => {
   const [profile, setProfile] = useState<UserProfile | null>(null);
-  const [videos, setVideos] = useState<UserMedia[]>([]);
+  const [videos, setVideos] = useState<FileEntity[]>([]);
   const EXPIRY_TIME = 1000 * 60 * 60;
   const { data } = useQuery(GET_USER, {
     variables: { 

@@ -1,3 +1,4 @@
+import { CreatePixChargeResponse, PixChargeDetails } from '../../types/payment';
 import { api } from './apiClient';
 
 export const createPix = async (
@@ -5,7 +6,7 @@ export const createPix = async (
   payerDocument: string,
   payerName: string,
   orderId: string
-): Promise<any> => {
+): Promise<CreatePixChargeResponse> => {
   const response = await api.post('/payment/pix', {
     amount,
     payerDocument,
@@ -16,7 +17,7 @@ export const createPix = async (
   return response.data;
 }
 
-export const getPixCharge = async (txid: string): Promise<any> => {
+export const getPixCharge = async (txid: string): Promise<PixChargeDetails> => {
   const response = await api.get(`/payment/pix/${txid}`);
 
   return response.data; 

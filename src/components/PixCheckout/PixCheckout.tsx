@@ -1,18 +1,13 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getPixCharge } from '../../api/rest/checkoutService';
+import { CreatePixChargeResponse } from '../../types/payment';
 
 type PixCheckoutProps = {
   orderId: string;
   amount: number;
   payerDocument: string;
   payerName: string;
-};
-
-type CreatePixResponse = {
-  txid: string;
-  qrcodeImage?: string;
-  copyAndPaste?: string;
 };
 
 const PixCheckout: React.FC<PixCheckoutProps> = ({
@@ -24,7 +19,7 @@ const PixCheckout: React.FC<PixCheckoutProps> = ({
   const [isLoading, setIsLoading] = useState(true);
   const [isCopying, setIsCopying] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
-  const [pixData, setPixData] = useState<CreatePixResponse | null>(null);
+  const [pixData, setPixData] = useState<CreatePixChargeResponse | null>(null);
   const navigate = useNavigate();
 
   const pixCode = useMemo(() => pixData?.copyAndPaste || '', [pixData]);

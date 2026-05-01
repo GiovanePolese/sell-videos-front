@@ -1,10 +1,10 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { UserMedia } from '../types/user';
+import { FileEntity } from '../types/files';
 
 interface CartState {
-  cartVideos: UserMedia[];
-  toggleVideo: (video: UserMedia) => void;
+  cartVideos: FileEntity[];
+  toggleVideo: (video: FileEntity) => void;
   removeVideo: (videoId: number) => void;
   clearCart: () => void;
 }
