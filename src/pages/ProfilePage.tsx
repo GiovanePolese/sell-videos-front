@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getProfile, logout } from '../api/rest/authService';
+import { getProfile } from '../api/rest/authService';
 import { GET_USER } from '../api/graphql/userQueries';
 import '../App.css'; 
 import { getActiveUserFiles } from '../api/rest/filesService';
@@ -8,10 +8,12 @@ import UploadFiles from '../components/UploadFiles/UploadFiles';
 import { useQuery } from '@apollo/client/react';
 import { UserProfile } from '../types/user';
 import { FileEntity } from '../types/files';
+import { useAuthStore } from '../store/useAuthStore';
 
 const ProfilePage: React.FC = () => {
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const [videos, setVideos] = useState<FileEntity[]>([]);
+  const clearToken = useAuthStore((state) => state.clearToken);
   const EXPIRY_TIME = 1000 * 60 * 60;
   const { data } = useQuery(GET_USER, {
     variables: { 
@@ -64,8 +66,11 @@ const ProfilePage: React.FC = () => {
 }, [EXPIRY_TIME]);
 
   const handleLogout = () => {
-    logout();
-    window.location.href = '/login'; // Redireciona para a página de login
+    clearToken();
+    localStorage.removeItem('profile');
+    localStorage.removeItem('profile_expiry');
+    localStorage.removeItem('videos');
+    window.location.href = '/login';
   };
 
   return (

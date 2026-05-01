@@ -1,14 +1,17 @@
 import React, { useState } from 'react';
 import { login } from '../../api/rest/authService';
+import { useAuthStore } from '../../store/useAuthStore';
 
 const LoginForm: React.FC = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const setToken = useAuthStore((state) => state.setToken);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await login(username, password);
+      const response = await login(username, password);
+      setToken(response.access_token);
       window.location.href = '/profile';
     } catch (error) {
       alert('Erro no login. Verifique suas credenciais. Error:' + error);
