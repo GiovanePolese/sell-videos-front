@@ -28,7 +28,7 @@ const CartPage: React.FC = () => {
   };
 
   return (
-    <div className="mt-10 flex flex-col justify-center px-4 pb-10 min-w-[700px]">
+    <div className="mt-10 flex flex-col justify-center px-4 pb-10 min-w-[700px] max-w-4xl mx-auto">
       <div className="mb-6 flex items-center justify-between">
         <h1 className="text-2xl font-bold">Carrinho</h1>
         <button

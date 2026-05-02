@@ -45,7 +45,7 @@ const UploadFiles = () => {
   };
 
   return (
-    <div style={{margin: "0 auto" }} className='pb-5 max-w-[400px]'>
+    <div style={{margin: "0 auto" }} className='pb-5 max-w-[400px] text-center'>
       <h2 className='p-5 text-xl'>Upload File</h2>
       <input className='pb-2' type="file" onChange={handleFileChange} multiple/>
       <button

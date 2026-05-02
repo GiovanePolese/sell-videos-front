@@ -8,12 +8,10 @@ import UploadFiles from '../components/UploadFiles/UploadFiles';
 import { useQuery } from '@apollo/client/react';
 import { UserProfile } from '../types/user';
 import { FileEntity } from '../types/files';
-import { useAuthStore } from '../store/useAuthStore';
 
 const ProfilePage: React.FC = () => {
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const [videos, setVideos] = useState<FileEntity[]>([]);
-  const clearToken = useAuthStore((state) => state.clearToken);
   const EXPIRY_TIME = 1000 * 60 * 60;
   const { data } = useQuery(GET_USER, {
     variables: { 
@@ -65,28 +63,20 @@ const ProfilePage: React.FC = () => {
   fetchProfileAndImages();
 }, [EXPIRY_TIME]);
 
-  const handleLogout = () => {
-    clearToken();
-    localStorage.removeItem('profile');
-    localStorage.removeItem('profile_expiry');
-    localStorage.removeItem('videos');
-    window.location.href = '/login';
-  };
-
   return (
-    <div className='flex flex-col justify-center mt-10'>
-      <h1 className='pb-5'>Página de Perfil</h1>
+    <div className='p-5'>
       {profile ? (
-        <div className='flex flex-col'>
-          <div className='flex pb-3 items-center justify-center'>
-            <p className='mr-7'>Bem-vindo, {profile.username}!</p>
-            <button onClick={handleLogout}>Logout</button>
+        <>
+          <h1 className='pb-5'>Bem-vindo, {profile?.username}!</h1>
+          <div className='flex w-full flex-col items-center justify-center mt-10'>
+            <div className='flex flex-col'>
+              <UploadFiles/>
+              <div className="video-container justify-center pt-12">
+                <Gallery videos={videos}/>
+              </div>
+            </div>
           </div>
-          <UploadFiles/>
-          <div className="video-container justify-center pt-12">
-            <Gallery videos={videos}/>
-          </div>
-        </div>
+        </>
       ) : (
         <p>Carregando perfil...</p>
       )}

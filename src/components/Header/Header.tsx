@@ -16,7 +16,7 @@ const Header: React.FC = () => {
   };
 
   return (
-    <header className="flex items-center justify-between px-6 py-3 bg-[#1a1a1a] border-b border-gray-700 shadow-md">
+    <header className="flex w-full items-center justify-between px-6 py-3 bg-[#1a1a1a] border-b border-gray-700 shadow-md">
       <Link to="/" className="flex items-center gap-2">
         <img src="/vite.svg" alt="Logo" className="h-8 w-8" />
         <span className="text-lg font-semibold text-white">Sell Videos</span>
