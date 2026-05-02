@@ -1,28 +1,32 @@
 import { AxiosProgressEvent } from 'axios';
 import { api } from './apiClient';
-import { AlbumSummary, GetActiveFilesResponse, UploadItem } from '../../types/files';
-
-export const getActiveUserFiles = async (userId: number | string, album?: string): Promise<GetActiveFilesResponse> => {
-  const params = album ? { album } : {};
-  const response = await api.get(`/files/user/${userId}/active`, { params });
-  return response.data;
-};
+import { Album, UploadFilesResponse, VideoFile } from '../../types/files';
 
 export const uploadFiles = async (
   formData: FormData,
   onProgress?: (progressEvent: AxiosProgressEvent) => void
-): Promise<UploadItem> => {
+): Promise<UploadFilesResponse> => {
   const response = await api.post('/files/upload', formData, {
     headers: {
       'Content-Type': 'multipart/form-data',
     },
-    onUploadProgress: onProgress, 
+    onUploadProgress: onProgress,
   });
 
   return response.data;
 };
 
-export const getUserAlbums = async (): Promise<AlbumSummary[]> => {
+export const getUserAlbums = async (): Promise<Album[]> => {
   const response = await api.get('/files/albums');
+  return response.data;
+};
+
+export const getPublicAlbumBySlug = async (slug: string): Promise<Album> => {
+  const response = await api.get(`/files/albums/${slug}`);
+  return response.data;
+};
+
+export const getVideosByAlbum = async (albumId: string): Promise<VideoFile[]> => {
+  const response = await api.get(`/files/albums/${albumId}/videos`);
   return response.data;
 };

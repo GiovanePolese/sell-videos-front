@@ -4,12 +4,12 @@ import '../App.css';
 import { getUserAlbums } from '../api/rest/filesService';
 import UploadFiles from '../components/UploadFiles/UploadFiles';
 import { UserProfile } from '../types/user';
-import { AlbumSummary } from '../types/files';
+import { Album } from '../types/files';
 import { useNavigate } from 'react-router-dom';
 
 const ProfilePage: React.FC = () => {
   const [profile, setProfile] = useState<UserProfile | null>(null);
-  const [albums, setAlbums] = useState<AlbumSummary[]>([]);
+  const [albums, setAlbums] = useState<Album[]>([]);
   const navigate = useNavigate();
   const EXPIRY_TIME = 1000 * 60 * 60;
 
@@ -63,16 +63,16 @@ const ProfilePage: React.FC = () => {
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
                   {albums.map((album) => (
                     <div
-                      key={album.album}
-                      onClick={() => navigate(`/album/${encodeURIComponent(album.album)}`)}
+                      key={album.id}
+                      onClick={() => navigate(`/album/${album.slug}`)}
                       className="cursor-pointer rounded-lg border border-gray-200 p-4 shadow-sm transition hover:shadow-md hover:border-blue-400"
                     >
-                      <h3 className="text-lg font-medium">{album.album}</h3>
+                      <h3 className="text-lg font-medium">{album.title}</h3>
                       <p className="text-sm text-gray-500">
-                        {album.count} {album.count === 1 ? 'vídeo' : 'vídeos'}
+                        {album.videos?.length ?? 0} {(album.videos?.length ?? 0) === 1 ? 'vídeo' : 'vídeos'}
                       </p>
                       <p className="text-xs text-gray-400 mt-1">
-                        Atualizado: {new Date(album.latestDate).toLocaleDateString('pt-BR')}
+                        Atualizado: {new Date(album.updated_at).toLocaleDateString('pt-BR')}
                       </p>
                     </div>
                   ))}

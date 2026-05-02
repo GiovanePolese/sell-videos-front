@@ -1,59 +1,33 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { getProfile } from '../api/rest/authService';
-import { getActiveUserFiles } from '../api/rest/filesService';
+import { getPublicAlbumBySlug } from '../api/rest/filesService';
 import { Gallery } from '../components/Gallery/Gallery';
 import UploadFiles from '../components/UploadFiles/UploadFiles';
-import { UserProfile } from '../types/user';
-import { FileEntity } from '../types/files';
+import { Album, VideoFile } from '../types/files';
 
 const AlbumPage: React.FC = () => {
   const { albumName } = useParams<{ albumName: string }>();
   const navigate = useNavigate();
-  const [profile, setProfile] = useState<UserProfile | null>(null);
-  const [videos, setVideos] = useState<FileEntity[]>([]);
+  const [album, setAlbum] = useState<Album | null>(null);
+  const [videos, setVideos] = useState<VideoFile[]>([]);
   const [loading, setLoading] = useState(true);
-  const decodedAlbum = decodeURIComponent(albumName ?? '');
+  const slug = albumName ?? '';
 
-  const loadVideos = useCallback(async (userId: number | string) => {
+  const loadAlbum = useCallback(async () => {
     try {
-      const data = await getActiveUserFiles(userId, decodedAlbum);
-      setVideos(data);
+      const data = await getPublicAlbumBySlug(slug);
+      setAlbum(data);
+      setVideos(data.videos.filter((v) => v.status));
     } catch (error) {
-      console.error('Erro ao carregar vídeos do álbum:', error);
+      console.error('Erro ao carregar álbum:', error);
+    } finally {
+      setLoading(false);
     }
-  }, [decodedAlbum]);
+  }, [slug]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const storedProfile = localStorage.getItem('profile');
-        let currentProfile: UserProfile;
-
-        if (storedProfile) {
-          currentProfile = JSON.parse(storedProfile);
-        } else {
-          currentProfile = await getProfile();
-          localStorage.setItem('profile', JSON.stringify(currentProfile));
-        }
-
-        setProfile(currentProfile);
-        await loadVideos(currentProfile.userId);
-      } catch (error) {
-        console.error('Erro ao carregar dados do álbum:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, [loadVideos]);
-
-  const handleUploadComplete = () => {
-    if (profile) {
-      loadVideos(profile.userId);
-    }
-  };
+    loadAlbum();
+  }, [loadAlbum]);
 
   if (loading) {
     return <p className="p-5">Carregando álbum...</p>;
@@ -68,11 +42,11 @@ const AlbumPage: React.FC = () => {
         &larr; Voltar aos álbuns
       </button>
 
-      <h1 className="pb-5 text-2xl font-bold">{decodedAlbum}</h1>
+      <h1 className="pb-5 text-2xl font-bold">{album?.title ?? slug}</h1>
 
       <div className="flex w-full flex-col items-center justify-center mt-5">
         <div className="flex flex-col w-full max-w-3xl">
-          <UploadFiles albumName={decodedAlbum} onUploadComplete={handleUploadComplete} />
+          <UploadFiles albumName={album?.title ?? slug} onUploadComplete={loadAlbum} />
 
           <div className="mt-8">
             {videos.length === 0 ? (

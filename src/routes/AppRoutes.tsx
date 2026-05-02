@@ -21,7 +21,7 @@ const AppRoutes: React.FC = () => {
 
         {/* Rotas com Header */}
         <Route element={<MainLayout />}>
-          <Route path="/gallery" element={<PublicGalleryPage />} />
+          <Route path="/gallery/:albumSlug" element={<PublicGalleryPage />} />
           <Route path="/cart" element={<CartPage />} />
           <Route path="/checkout/pix/:orderId" element={<PixCheckoutPage />} />
 

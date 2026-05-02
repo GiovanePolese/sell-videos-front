@@ -54,8 +54,8 @@ const CartPage: React.FC = () => {
               >
                 <div>
                   <p className="text-sm font-semibold text-white text-left">Vídeo #{video.id}</p>
-                  <p className="text-sm text-gray-500 text-left">Arquivo: {video.image_name}</p>
-                  <p className="text-xs text-gray-500 text-left">Data: {new Date(video.date).toLocaleDateString('pt-BR')}</p>
+                  <p className="text-sm text-gray-500 text-left">Arquivo: {video.file_name}</p>
+                  <p className="text-xs text-gray-500 text-left">Data: {new Date(video.created_at).toLocaleDateString('pt-BR')}</p>
                   <p className="text-sm text-gray-500 text-left">Valor: R$35,00</p>
                 </div>
 
