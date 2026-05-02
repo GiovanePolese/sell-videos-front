@@ -3,6 +3,7 @@ export interface FileEntity {
   fk_users: number;
   image_name: string;
   image_url: string;
+  album: string;
   date: string;
   status: boolean;
 }
@@ -18,4 +19,10 @@ export type GetActiveFilesResponse = FileEntity[];
 export interface UploadFilesResponse {
   message: string;
   uploads: UploadItem[];
+}
+
+export interface AlbumSummary {
+  album: string;
+  count: number;
+  latestDate: string;
 }

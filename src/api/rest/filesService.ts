@@ -1,9 +1,10 @@
 import { AxiosProgressEvent } from 'axios';
 import { api } from './apiClient';
-import { GetActiveFilesResponse, UploadItem } from '../../types/files';
+import { AlbumSummary, GetActiveFilesResponse, UploadItem } from '../../types/files';
 
-export const getActiveUserFiles = async (userId: number | string): Promise<GetActiveFilesResponse> => {
-  const response = await api.get(`/files/user/${userId}/active`);
+export const getActiveUserFiles = async (userId: number | string, album?: string): Promise<GetActiveFilesResponse> => {
+  const params = album ? { album } : {};
+  const response = await api.get(`/files/user/${userId}/active`, { params });
   return response.data;
 };
 
@@ -18,5 +19,10 @@ export const uploadFiles = async (
     onUploadProgress: onProgress, 
   });
 
+  return response.data;
+};
+
+export const getUserAlbums = async (): Promise<AlbumSummary[]> => {
+  const response = await api.get('/files/albums');
   return response.data;
 };
