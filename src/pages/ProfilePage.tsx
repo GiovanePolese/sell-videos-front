@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getProfile, logout } from '../api/rest/authService';
+import { getProfile } from '../api/rest/authService';
 import { GET_USER } from '../api/graphql/userQueries';
 import '../App.css'; 
 import { getActiveUserFiles } from '../api/rest/filesService';
@@ -63,25 +63,20 @@ const ProfilePage: React.FC = () => {
   fetchProfileAndImages();
 }, [EXPIRY_TIME]);
 
-  const handleLogout = () => {
-    logout();
-    window.location.href = '/login'; // Redireciona para a página de login
-  };
-
   return (
-    <div className='flex flex-col justify-center mt-10'>
-      <h1 className='pb-5'>Página de Perfil</h1>
+    <div className='p-5'>
       {profile ? (
-        <div className='flex flex-col'>
-          <div className='flex pb-3 items-center justify-center'>
-            <p className='mr-7'>Bem-vindo, {profile.username}!</p>
-            <button onClick={handleLogout}>Logout</button>
+        <>
+          <h1 className='pb-5'>Bem-vindo, {profile?.username}!</h1>
+          <div className='flex w-full flex-col items-center justify-center mt-10'>
+            <div className='flex flex-col'>
+              <UploadFiles/>
+              <div className="video-container justify-center pt-12">
+                <Gallery videos={videos}/>
+              </div>
+            </div>
           </div>
-          <UploadFiles/>
-          <div className="video-container justify-center pt-12">
-            <Gallery videos={videos}/>
-          </div>
-        </div>
+        </>
       ) : (
         <p>Carregando perfil...</p>
       )}

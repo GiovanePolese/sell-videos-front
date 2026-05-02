@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useCartStore } from '../store/useCartStore'; // <-- Import da nova store
+import { useCartStore } from '../store/useCartStore';
+import { useAuthStore } from '../store/useAuthStore';
 import { createPix } from '../api/rest/checkoutService';
 
 const CartPage: React.FC = () => {
@@ -9,8 +10,14 @@ const CartPage: React.FC = () => {
   const cartVideos = useCartStore((state) => state.cartVideos);
   const removeVideo = useCartStore((state) => state.removeVideo);
   const clearCart = useCartStore((state) => state.clearCart);
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
 
   const handlePixCheckout = async () => {
+    if (!isAuthenticated) {
+      navigate('/login');
+      return;
+    }
+
     const generatedOrderId = `${Date.now()}`;
     const totalPrice = +(cartVideos.length * 35).toFixed(2);
     const createPixResponse = await createPix(totalPrice, "11684201993", "Maria", generatedOrderId);
@@ -21,7 +28,7 @@ const CartPage: React.FC = () => {
   };
 
   return (
-    <div className="mt-10 flex flex-col justify-center px-4 pb-10 min-w-[700px]">
+    <div className="mt-10 flex flex-col justify-center px-4 pb-10 min-w-[700px] max-w-4xl mx-auto">
       <div className="mb-6 flex items-center justify-between">
         <h1 className="text-2xl font-bold">Carrinho</h1>
         <button
