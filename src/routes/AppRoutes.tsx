@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import LoginPage from '../pages/LoginPage';
 import ProfilePage from '../pages/ProfilePage';
+import AlbumPage from '../pages/AlbumPage';
 import HomePage from '../pages/HomePage';
 import PublicGalleryPage from '../pages/PublicGalleryPage';
 import CartPage from '../pages/CartPage';
@@ -20,7 +21,7 @@ const AppRoutes: React.FC = () => {
 
         {/* Rotas com Header */}
         <Route element={<MainLayout />}>
-          <Route path="/gallery" element={<PublicGalleryPage />} />
+          <Route path="/gallery/:albumSlug" element={<PublicGalleryPage />} />
           <Route path="/cart" element={<CartPage />} />
           <Route path="/checkout/pix/:orderId" element={<PixCheckoutPage />} />
 
@@ -30,6 +31,14 @@ const AppRoutes: React.FC = () => {
             element={
               <ProtectedRoute>
                 <ProfilePage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/album/:albumName"
+            element={
+              <ProtectedRoute>
+                <AlbumPage />
               </ProtectedRoute>
             }
           />

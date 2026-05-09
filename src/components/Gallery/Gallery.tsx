@@ -1,10 +1,10 @@
-import { FileEntity } from "../../types/files";
+import { VideoFile } from "../../types/files";
 
 type GalleryProps = {
-  videos: FileEntity[];
+  videos: VideoFile[];
   prependWatermark?: boolean;
-  cartVideoIds?: number[];
-  onToggleCart?: (video: FileEntity) => void;
+  cartVideoIds?: string[];
+  onToggleCart?: (video: VideoFile) => void;
 };
 
 export const Gallery = ({ videos, prependWatermark = false, cartVideoIds = [], onToggleCart }: GalleryProps) => {
@@ -26,7 +26,7 @@ export const Gallery = ({ videos, prependWatermark = false, cartVideoIds = [], o
               controls
             >
               <source
-                src={prependWatermark ? `${cloudFrontUrl}wm-${video.image_name}` : `${cloudFrontUrl}${video.image_name}`}
+                src={prependWatermark ? `${cloudFrontUrl}wm-${video.file_name}` : `${cloudFrontUrl}${video.file_name}`}
                 type="video/mp4"
               />
             </video>
