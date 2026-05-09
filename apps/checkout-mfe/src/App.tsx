@@ -1,10 +1,16 @@
 import React from 'react';
-import AppRoutes from './routes/AppRoutes';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+import CartPage from './pages/CartPage';
+import PixCheckoutPage from './pages/PixCheckoutPage';
 
-const App: React.FC = () => {
+export default function App() {
   return (
-    <AppRoutes />
+    <BrowserRouter>
+      <Routes>
+        <Route path="/cart" element={<CartPage />} />
+        <Route path="/checkout/pix/:orderId" element={<PixCheckoutPage />} />
+        <Route path="*" element={<Navigate to="/cart" replace />} />
+      </Routes>
+    </BrowserRouter>
   );
-};
-
-export default App;
+}
